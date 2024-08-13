@@ -1,0 +1,66 @@
+# Toplama işlemini yapan fonksiyon
+def toplama(x, y):
+    """İki sayıyı toplar."""
+    return x + y
+
+# Çıkarma işlemini yapan fonksiyon
+def cikarma(x, y):
+    """Bir sayıdan diğerini çıkarır."""
+    return x - y
+
+# Çarpma işlemini yapan fonksiyon
+def carpma(x, y):
+    """İki sayıyı çarpar."""
+    return x * y
+
+# Bölme işlemini yapan fonksiyon
+def bolme(x, y):
+    """Bir sayıyı diğerine böler."""
+    if y == 0:
+        return "Hata: Sıfıra bölme hatası."
+    return x / y
+
+# Hesap makinesi uygulaması
+def hesap_makinesi():
+    """Kullanıcıya hesap makinesi işlemlerini yaptırır."""
+    while True:
+        print("\nBasit Hesap Makinesi")
+        print("1. Toplama")
+        print("2. Çıkarma")
+        print("3. Çarpma")
+        print("4. Bölme")
+        print("5. Çıkış")
+
+        # Kullanıcının işlem seçmesini sağlar
+        secim = input("Bir işlem seçin (1/2/3/4/5): ")
+
+        # Çıkış seçeneği
+        if secim == '5':
+            print("Çıkılıyor...")
+            break
+
+        # Geçerli bir seçim yapıldığında
+        if secim in ['1', '2', '3', '4']:
+            try:
+                # Kullanıcıdan iki sayı alır
+                x = float(input("Birinci sayıyı girin: "))
+                y = float(input("İkinci sayıyı girin: "))
+            except ValueError:
+                print("Geçersiz giriş. Lütfen geçerli bir sayı girin.")
+                continue
+
+            # Seçime göre işlemi yapar
+            if secim == '1':
+                print(f"Sonuç: {toplama(x, y)}")
+            elif secim == '2':
+                print(f"Sonuç: {cikarma(x, y)}")
+            elif secim == '3':
+                print(f"Sonuç: {carpma(x, y)}")
+            elif secim == '4':
+                print(f"Sonuç: {bolme(x, y)}")
+        else:
+            print("Geçersiz seçim. Lütfen 1, 2, 3, 4 veya 5 girin.")
+
+# Programı başlatan kod
+if __name__ == "__main__":
+    hesap_makinesi()
