@@ -1,0 +1,69 @@
+-- Veritabanı oluşturma
+CREATE DATABASE ogrenci_veritabani;
+
+-- Veritabanını kullanma
+USE ogrenci_veritabani;
+
+-- Öğrenciler tablosunu oluşturma
+CREATE TABLE Ogrenciler (
+    ogrenci_id INT AUTO_INCREMENT PRIMARY KEY,
+    ad VARCHAR(50),
+    soyad VARCHAR(50),
+    ogrenci_numarasi VARCHAR(20) UNIQUE,
+    bolum VARCHAR(50)
+);
+
+-- Dersler tablosunu oluşturma
+CREATE TABLE Dersler (
+    ders_id INT AUTO_INCREMENT PRIMARY KEY,
+    ders_adi VARCHAR(100),
+    ders_kodu VARCHAR(20) UNIQUE
+);
+
+-- Ders_Kayitlari tablosunu oluşturma
+CREATE TABLE Ders_Kayitlari (
+    kayit_id INT AUTO_INCREMENT PRIMARY KEY,
+    ogrenci_id INT,
+    ders_id INT,
+    not FLOAT,
+    FOREIGN KEY (ogrenci_id) REFERENCES Ogrenciler(ogrenci_id),
+    FOREIGN KEY (ders_id) REFERENCES Dersler(ders_id)
+);
+
+-- Öğrenciler tablosuna veri ekleme
+INSERT INTO Ogrenciler (ad, soyad, ogrenci_numarasi, bolum) VALUES
+('Irem', 'Gursoy', '230206018', 'Bilgisayar Mühendisliği'),
+('Arzu', 'Demir', '230206019', 'Elektrik Elektronik Mühendisliği');
+
+-- Dersler tablosuna veri ekleme
+INSERT INTO Dersler (ders_adi, ders_kodu) VALUES
+('Is Yeri Egitimi', 'ıye126'),
+('SQL', 'SQ101');
+
+-- Ders_Kayitlari tablosuna veri ekleme
+INSERT INTO Ders_Kayitlari (ogrenci_id, ders_id, not) VALUES
+(1, 1, 85.0),
+(1, 2, 90.0),
+(2, 1, 75.0);
+
+-- Yeni öğrenci ekleme
+INSERT INTO Ogrenciler (ad, soyad, ogrenci_numarasi, bolum) VALUES ('Lutfi', 'Gursoy', '230206020', 'Matematik');
+
+-- Öğrencinin bölümünü güncelleme
+UPDATE Ogrenciler SET bolum = 'İstatistik' WHERE ogrenci_numarasi = '230206020';
+
+-- Öğrenciyi silme
+DELETE FROM Ogrenciler WHERE ogrenci_numarasi = '230206020';
+
+-- Belirli bir öğrencinin aldığı dersler ve notları sorgulama
+SELECT O.ad, O.soyad, D.ders_adi, DK.not
+FROM Ogrenciler O
+JOIN Ders_Kayitlari DK ON O.ogrenci_id = DK.ogrenci_id
+JOIN Dersler D ON DK.ders_id = D.ders_id
+WHERE O.ogrenci_numarasi = '230206018';
+
+-- Tüm öğrencileri ve aldıkları derslerin bilgilerini sorgulama
+SELECT O.ad, O.soyad, D.ders_adi, DK.not
+FROM Ogrenciler O
+JOIN Ders_Kayitlari DK ON O.ogrenci_id = DK.ogrenci_id
+JOIN Dersler D ON DK.ders_id = D.ders_id;
